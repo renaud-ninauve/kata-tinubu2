@@ -10,8 +10,6 @@ Important endpoints are :
   - status of the application
 - /v3/api-docs
   - rest endpoints documentation in open api format
-- /profile/insurancePolicies
-  - rest endpoints documentation in alps format
 
 # build docker image from Dockerfile
 
