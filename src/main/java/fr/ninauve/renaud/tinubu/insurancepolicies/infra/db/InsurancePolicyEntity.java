@@ -45,7 +45,11 @@ public class InsurancePolicyEntity {
     private Instant endDate;
 
     @CreatedDate
+    @Column(name = "created_date", nullable = false, updatable = false)
+
     private Instant createdDate;
+
     @LastModifiedDate
+    @Column(name = "last_modified_date")
     private Instant lastModifiedDate;
 }

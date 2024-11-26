@@ -22,11 +22,8 @@ public class CommandHandler {
 
     @Transactional
     public void updateInsurancePolicy(UpdateInsurancePolicyCommand command) {
-        if (!repository.existsById(command.getId())) {
-            throw new InsurancePolicyNotFoundException();
-        }
-
-        InsurancePolicyEntity insurancePolicy = updateMapper.toEntity(command);
+        InsurancePolicyEntity insurancePolicy = repository.findById(command.getId()).orElseThrow(() -> new InsurancePolicyNotFoundException());
+        updateMapper.copyFields(command, insurancePolicy);
         repository.save(insurancePolicy);
     }
 
