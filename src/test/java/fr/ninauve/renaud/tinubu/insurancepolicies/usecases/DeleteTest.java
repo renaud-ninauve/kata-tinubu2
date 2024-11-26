@@ -20,7 +20,7 @@ public class DeleteTest implements UseCase {
     void delete() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 

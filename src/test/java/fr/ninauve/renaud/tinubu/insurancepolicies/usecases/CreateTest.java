@@ -35,7 +35,7 @@ public class CreateTest implements UseCase {
     void create_when_valid() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
@@ -49,7 +49,7 @@ public class CreateTest implements UseCase {
                 .then()
                 .statusCode(201)
                 .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
-                .body("status", is(equalTo(INSURANCE_POLICY_STATUS)))
+                .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
                 .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
                 .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
@@ -67,7 +67,7 @@ public class CreateTest implements UseCase {
                 .then()
                 .statusCode(200)
                 .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
-                .body("status", is(equalTo(INSURANCE_POLICY_STATUS)))
+                .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
                 .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
                 .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
@@ -78,7 +78,7 @@ public class CreateTest implements UseCase {
     void fail_when_name_is_blank() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", "")
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 

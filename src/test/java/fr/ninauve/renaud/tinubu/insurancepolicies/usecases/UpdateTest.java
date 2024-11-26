@@ -36,7 +36,7 @@ public class UpdateTest implements UseCase {
     void update_when_valid() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
@@ -56,7 +56,7 @@ public class UpdateTest implements UseCase {
         final String updateCommand = UPDATE_COMMAND_TEMPLATE
                 .replace("${id}", "" + id)
                 .replace("${name}", UPDATE_NAME)
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
@@ -88,7 +88,7 @@ public class UpdateTest implements UseCase {
     void fail_when_name_is_blank() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
@@ -108,7 +108,7 @@ public class UpdateTest implements UseCase {
         final String updateCommand = UPDATE_COMMAND_TEMPLATE
                 .replace("${id}", "" + id)
                 .replace("${name}", "")
-                .replace("${status}", INSURANCE_POLICY_STATUS)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
