@@ -4,6 +4,7 @@ import fr.ninauve.renaud.tinubu.insurancepolicies.command.CommandHandler;
 import fr.ninauve.renaud.tinubu.insurancepolicies.command.CreateInsurancePolicyCommand;
 import fr.ninauve.renaud.tinubu.insurancepolicies.command.UpdateInsurancePolicyCommand;
 import fr.ninauve.renaud.tinubu.insurancepolicies.query.InsurancePolicyDetailsViewModel;
+import fr.ninauve.renaud.tinubu.insurancepolicies.query.InsurancePolicyListViewModel;
 import fr.ninauve.renaud.tinubu.insurancepolicies.query.QueryHandler;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class InsurancePolicyController {
     @PutMapping("{id}")
     public void update(@RequestBody @Valid UpdateInsurancePolicyCommand command) {
         commandHandler.updateInsurancePolicy(command);
+    }
+
+    @GetMapping
+    public InsurancePolicyListViewModel list(@RequestParam(defaultValue = "0") int page) {
+        return queryHandler.list(page);
     }
 
     @GetMapping("{id}")
