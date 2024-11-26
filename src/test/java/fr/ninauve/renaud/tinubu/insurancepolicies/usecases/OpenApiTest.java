@@ -20,7 +20,7 @@ public class OpenApiTest implements UseCase {
                 .get("/v3/api-docs")
                 .then()
                 .statusCode(200)
-                .body("paths.'/insurancePolicies'.keySet()", hasItems("post"))
+                .body("paths.'/insurancePolicies'.keySet()", hasItems("get", "post"))
                 .body("paths.'/insurancePolicies/{id}'.keySet()", hasItems("get", "put", "delete"));
     }
 

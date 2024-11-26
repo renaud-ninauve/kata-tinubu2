@@ -41,7 +41,7 @@ public class InsurancePolicyController {
     }
 
     @DeleteMapping("{id}")
-    public void delete(long id) {
+    public void delete(@PathVariable long id) {
         commandHandler.deleteInsurancePolicy(id);
     }
 }
