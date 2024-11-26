@@ -2,6 +2,7 @@ package fr.ninauve.renaud.tinubu.insurancepolicies.web;
 
 import fr.ninauve.renaud.tinubu.insurancepolicies.command.CommandHandler;
 import fr.ninauve.renaud.tinubu.insurancepolicies.command.CreateInsurancePolicyCommand;
+import fr.ninauve.renaud.tinubu.insurancepolicies.command.UpdateFieldsInsurancePolicyCommand;
 import fr.ninauve.renaud.tinubu.insurancepolicies.command.UpdateInsurancePolicyCommand;
 import fr.ninauve.renaud.tinubu.insurancepolicies.query.InsurancePolicyDetailsViewModel;
 import fr.ninauve.renaud.tinubu.insurancepolicies.query.InsurancePolicyListViewModel;
@@ -28,6 +29,11 @@ public class InsurancePolicyController {
     @PutMapping("{id}")
     public void update(@RequestBody @Valid UpdateInsurancePolicyCommand command) {
         commandHandler.updateInsurancePolicy(command);
+    }
+
+    @PatchMapping("{id}")
+    public void updateFields(@RequestBody @Valid UpdateFieldsInsurancePolicyCommand command) {
+        commandHandler.updateFieldsInsurancePolicy(command);
     }
 
     @GetMapping

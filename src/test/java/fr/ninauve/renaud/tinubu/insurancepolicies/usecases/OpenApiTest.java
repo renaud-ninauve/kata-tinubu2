@@ -21,7 +21,7 @@ public class OpenApiTest implements UseCase {
                 .then()
                 .statusCode(200)
                 .body("paths.'/insurancePolicies'.keySet()", hasItems("get", "post"))
-                .body("paths.'/insurancePolicies/{id}'.keySet()", hasItems("get", "put", "delete"));
+                .body("paths.'/insurancePolicies/{id}'.keySet()", hasItems("get", "put", "patch", "delete"));
     }
 
     @Override
