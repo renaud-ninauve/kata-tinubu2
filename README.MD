@@ -16,6 +16,13 @@ Important endpoints are :
 mvn clean install
 docker build -t insurancepolicies .
 
+# build application without running IT tests
+
+If you don't have docker on your machine, you can build
+the application using :
+
+mvn clean install -DskipITs=true
+
 # run application
 
 Build the docker image, then do :

@@ -6,19 +6,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItems;
 
 @ExtendWith(UseCasesExtension.class)
-public class HealthTest implements UseCase {
+public class OpenApiITCase implements UseCase {
     private String applicationBaseUri;
 
     @Test
-    void health() {
+    void list_insurancePolicies_paths() {
         given()
                 .baseUri(applicationBaseUri)
                 .when()
-                .get("/actuator/health")
+                .get("/v3/api-docs")
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+                .body("paths.'/insurancePolicies'.keySet()", hasItems("get", "post"))
+                .body("paths.'/insurancePolicies/{id}'.keySet()", hasItems("get", "put", "patch", "delete"));
     }
 
     @Override

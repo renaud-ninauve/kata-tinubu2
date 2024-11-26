@@ -10,30 +10,27 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static fr.ninauve.renaud.tinubu.insurancepolicies.TestData.*;
-import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateTest.CREATE_COMMAND_TEMPLATE;
-import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateTest.DATE_TIME_PATTERN;
+import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateITCase.CREATE_COMMAND_TEMPLATE;
+import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateITCase.DATE_TIME_PATTERN;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 @ExtendWith(UseCasesExtension.class)
-public class UpdateTest implements UseCase {
+public class UpdateFieldsITCase implements UseCase {
     private static final String UPDATE_NAME = "update name";
 
-    static final String UPDATE_COMMAND_TEMPLATE = """
+    static final String UPDATE_NAME_COMMAND_TEMPLATE = """
             {
                 "id": ${id},
-                "name": "${name}",
-                "status": "${status}",
-                "startDate": "${startDate}",
-                "endDate": "${endDate}"
+                "name": "${name}"
             }
             """;
 
     private String applicationBaseUri;
 
     @Test
-    void update_when_valid() {
+    void update_name_when_valid() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
                 .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
@@ -53,21 +50,18 @@ public class UpdateTest implements UseCase {
 
         long id = createResponse.body().jsonPath().getLong("id");
 
-        final String updateCommand = UPDATE_COMMAND_TEMPLATE
+        final String updateFieldsCommand = UPDATE_NAME_COMMAND_TEMPLATE
                 .replace("${id}", "" + id)
-                .replace("${name}", UPDATE_NAME)
-                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
+                .replace("${name}", UPDATE_NAME);
 
         given()
                 .baseUri(applicationBaseUri)
                 .basePath("/insurancePolicies/{id}")
                 .pathParam("id", id)
                 .contentType(ContentType.JSON)
-                .body(updateCommand)
+                .body(updateFieldsCommand)
                 .when()
-                .put()
+                .patch()
                 .then()
                 .statusCode(200);
 
@@ -80,6 +74,9 @@ public class UpdateTest implements UseCase {
                 .then()
                 .statusCode(200)
                 .body("name", is(equalTo(UPDATE_NAME)))
+                .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
+                .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
+                .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
                 .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)));
     }
@@ -105,21 +102,18 @@ public class UpdateTest implements UseCase {
 
         long id = createResponse.body().jsonPath().getLong("id");
 
-        final String updateCommand = UPDATE_COMMAND_TEMPLATE
+        final String updateFieldsCommand = UPDATE_NAME_COMMAND_TEMPLATE
                 .replace("${id}", "" + id)
-                .replace("${name}", "")
-                .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
+                .replace("${name}", "");
 
         given()
                 .baseUri(applicationBaseUri)
                 .basePath("/insurancePolicies/{id}")
                 .pathParam("id", id)
                 .contentType(ContentType.JSON)
-                .body(updateCommand)
+                .body(updateFieldsCommand)
                 .when()
-                .put()
+                .patch()
                 .then()
                 .statusCode(400);
     }
