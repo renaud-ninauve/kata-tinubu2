@@ -9,6 +9,7 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static fr.ninauve.renaud.tinubu.insurancepolicies.TestData.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -18,11 +19,6 @@ public class CreateTest implements UseCase {
     static final String DATE_PATTERN = "\\d\\d\\d\\d-\\d\\d-\\d\\d";
     static final String TIME_PATTERN = "\\d\\d:\\d\\d:\\d\\d\\.\\d*";
     static final String DATE_TIME_PATTERN = DATE_PATTERN + "T" + TIME_PATTERN + "Z";
-
-    static final String INSURANCE_POLICY_NAME = "my-policy";
-    static final String INSURANCE_POLICY_STATUS = "ACTIVE";
-    static final String INSURANCE_POLICY_START_DATE = "2024-11-24T14:41:52.123456Z";
-    static final String INSURANCE_POLICY_END_DATE = "2025-11-24T14:41:52.123456Z";
 
     static final String CREATE_COMMAND_TEMPLATE = """
             {
@@ -40,8 +36,8 @@ public class CreateTest implements UseCase {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         ExtractableResponse<Response> createResponse = given()
                 .baseUri(applicationBaseUri)
@@ -54,8 +50,8 @@ public class CreateTest implements UseCase {
                 .statusCode(201)
                 .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
                 .body("status", is(equalTo(INSURANCE_POLICY_STATUS)))
-                .body("startDate", is(equalTo(INSURANCE_POLICY_START_DATE)))
-                .body("endDate", is(equalTo(INSURANCE_POLICY_END_DATE)))
+                .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
+                .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
                 .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
                 .extract();
@@ -72,8 +68,8 @@ public class CreateTest implements UseCase {
                 .statusCode(200)
                 .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
                 .body("status", is(equalTo(INSURANCE_POLICY_STATUS)))
-                .body("startDate", is(equalTo(INSURANCE_POLICY_START_DATE)))
-                .body("endDate", is(equalTo(INSURANCE_POLICY_END_DATE)))
+                .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
+                .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
                 .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)));
     }
@@ -83,8 +79,8 @@ public class CreateTest implements UseCase {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", "")
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         given()
                 .baseUri(applicationBaseUri)

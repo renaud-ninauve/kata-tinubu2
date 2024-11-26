@@ -35,7 +35,7 @@ public class InsurancePolicyController {
         return queryHandler.list(page);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public InsurancePolicyDetailsViewModel details(@PathVariable long id) {
         return queryHandler.detailsOf(id);
     }

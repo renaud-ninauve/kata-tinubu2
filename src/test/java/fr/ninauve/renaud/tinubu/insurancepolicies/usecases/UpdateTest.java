@@ -9,7 +9,9 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateTest.*;
+import static fr.ninauve.renaud.tinubu.insurancepolicies.TestData.*;
+import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateTest.CREATE_COMMAND_TEMPLATE;
+import static fr.ninauve.renaud.tinubu.insurancepolicies.usecases.CreateTest.DATE_TIME_PATTERN;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
@@ -35,8 +37,8 @@ public class UpdateTest implements UseCase {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         ExtractableResponse<Response> createResponse = given()
                 .baseUri(applicationBaseUri)
@@ -55,8 +57,8 @@ public class UpdateTest implements UseCase {
                 .replace("${id}", "" + id)
                 .replace("${name}", UPDATE_NAME)
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         given()
                 .baseUri(applicationBaseUri)
@@ -87,8 +89,8 @@ public class UpdateTest implements UseCase {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         ExtractableResponse<Response> createResponse = given()
                 .baseUri(applicationBaseUri)
@@ -107,8 +109,8 @@ public class UpdateTest implements UseCase {
                 .replace("${id}", "" + id)
                 .replace("${name}", "")
                 .replace("${status}", INSURANCE_POLICY_STATUS)
-                .replace("${startDate}", INSURANCE_POLICY_START_DATE)
-                .replace("${endDate}", INSURANCE_POLICY_END_DATE);
+                .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
+                .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
         given()
                 .baseUri(applicationBaseUri)
