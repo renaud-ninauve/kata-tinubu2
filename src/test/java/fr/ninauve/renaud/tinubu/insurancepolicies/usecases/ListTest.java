@@ -25,7 +25,7 @@ public class ListTest implements UseCase {
                 .replace("${startDate}", INSURANCE_POLICY_JSON_START_DATE)
                 .replace("${endDate}", INSURANCE_POLICY_JSON_END_DATE);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 123; i++) {
 
             given()
                     .baseUri(applicationBaseUri)
@@ -48,7 +48,8 @@ public class ListTest implements UseCase {
                 .statusCode(200)
                 .body("insurancePolicies", hasSize(3))
                 .body("pageInfo.page", is(equalTo(2)))
-                .body("pageInfo.size", is(equalTo(100)));
+                .body("pageInfo.totalElements", is(equalTo(123)))
+                .body("pageInfo.totalPages", is(equalTo(41)));
     }
 
     @Override

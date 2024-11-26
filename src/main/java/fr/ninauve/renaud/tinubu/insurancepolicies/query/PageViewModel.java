@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class PageViewModel {
     private final int page;
-    private final long size;
+    private final long totalElements;
+    private final long totalPages;
 }
