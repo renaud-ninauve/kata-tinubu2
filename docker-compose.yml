@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+
+  insurancepolicies:
+    depends_on:
+      - insurancepolicies-postgres
+    image: "insurancepolicies"
+    container_name: "insurancepolicies"
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://insurancepolicies-postgres:5432/insurance
+      - SPRING_DATASOURCE_USERNAME=paul
+      - SPRING_DATASOURCE_PASSWORD=grey
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+
+  insurancepolicies-postgres:
+    image: "postgres:16.4"
+    container_name: "insurancepolicies-postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=paul
+      - POSTGRES_PASSWORD=grey
+      - POSTGRES_DB=insurance

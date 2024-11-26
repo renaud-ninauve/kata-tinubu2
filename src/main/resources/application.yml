@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: insurancepolicies
+
+  data:
+    rest:
+      base-path: /
