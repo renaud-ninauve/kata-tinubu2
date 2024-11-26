@@ -15,14 +15,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static fr.ninauve.renaud.tinubu.insurancepolicies.TestData.*;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CommandHandlerTest {
+class CommandHandlerUpdateTest {
     private static final String UPDATE_NAME = "update name";
     private static final String UPDATE_JSON_START_DATE = "2334-11-24T14:41:52.123456Z";
     private static final Instant UPDATE_START_DATE = Instant.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(UPDATE_JSON_START_DATE));
@@ -34,34 +32,6 @@ class CommandHandlerTest {
 
     @Mock
     InsurancePolicyRepositoryJpa repository;
-
-    @Test
-    void should_create() {
-        long savedId = 777L;
-
-        when(repository.save(any()))
-                .thenReturn(InsurancePolicyEntity.builder()
-                        .id(savedId)
-                        .build());
-
-        CreateInsurancePolicyCommand command = CreateInsurancePolicyCommand.builder()
-                .name(TestData.INSURANCE_POLICY_NAME)
-                .status(InsurancePolicyStatus.ACTIVE)
-                .startDate(INSURANCE_POLICY_START_DATE)
-                .endDate(INSURANCE_POLICY_END_DATE)
-                .build();
-
-        long actual = commandHandler.createInsurancePolicy(command);
-
-        verify(repository).save(InsurancePolicyEntity.builder()
-                .name(TestData.INSURANCE_POLICY_NAME)
-                .status(InsurancePolicyEntity.Status.ACTIVE)
-                .startDate(INSURANCE_POLICY_START_DATE)
-                .endDate(INSURANCE_POLICY_END_DATE)
-                .build());
-
-        assertThat(actual).isEqualTo(savedId);
-    }
 
     @Test
     void should_update() {
