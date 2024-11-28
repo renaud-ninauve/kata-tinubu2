@@ -32,7 +32,7 @@ public class CreateITCase implements UseCase {
     private String applicationBaseUri;
 
     @Test
-    void create_when_valid() {
+    void create_when_all_fields_valid() {
         final String createCommand = CREATE_COMMAND_TEMPLATE
                 .replace("${name}", INSURANCE_POLICY_NAME)
                 .replace("${status}", INSURANCE_POLICY_JSON_STATUS)
@@ -70,6 +70,47 @@ public class CreateITCase implements UseCase {
                 .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
                 .body("startDate", is(equalTo(INSURANCE_POLICY_JSON_START_DATE)))
                 .body("endDate", is(equalTo(INSURANCE_POLICY_JSON_END_DATE)))
+                .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
+                .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)));
+    }
+
+    @Test
+    void create_when_all_required_fields_valid() {
+        final String createCommand = """
+                {
+                    "name": "${name}",
+                    "status": "${status}"
+                }
+                """.replace("${name}", INSURANCE_POLICY_NAME)
+                .replace("${status}", INSURANCE_POLICY_JSON_STATUS);
+
+        ExtractableResponse<Response> createResponse = given()
+                .baseUri(applicationBaseUri)
+                .basePath("/insurancePolicies")
+                .contentType(ContentType.JSON)
+                .body(createCommand)
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
+                .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
+                .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
+                .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
+                .extract();
+
+        long id = createResponse.body().jsonPath().getLong("id");
+
+        given()
+                .baseUri(applicationBaseUri)
+                .basePath("/insurancePolicies/{id}")
+                .pathParam("id", id)
+                .when()
+                .get()
+                .then()
+                .statusCode(200)
+                .body("name", is(equalTo(INSURANCE_POLICY_NAME)))
+                .body("status", is(equalTo(INSURANCE_POLICY_JSON_STATUS)))
                 .body("createdDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)))
                 .body("lastModifiedDate", is(Matchers.matchesPattern(DATE_TIME_PATTERN)));
     }
